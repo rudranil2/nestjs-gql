@@ -1,20 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDonationInput } from './dto/create-donation.input';
+import { CreateDonationInput } from './donations.dto';
 import { PrismaService } from 'prisma/prisma.service';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class DonationsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createDonationInput: CreateDonationInput) {
-    return 'This action adds a new donation';
+  async create(createDonationInput: CreateDonationInput) {
+    return this.prisma.donation.create({
+      data: createDonationInput,
+    });
   }
 
   async findAll() {
     return this.prisma.donation.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} donation`;
+  async findOne(id: number) {
+    const obj: any = await this.prisma.donation.findFirst({
+      where: { id },
+    });
+
+    if (obj) {
+      obj.createdAt = dayjs(new Date(obj.createdAt)).format('DD/MM/YYYY');
+      return obj;
+    }
+
+    return null;
   }
 }
