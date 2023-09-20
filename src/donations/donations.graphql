@@ -27,6 +27,6 @@ type Mutation {
 input PaginationProps {
   limit: Int!,
   page: Int!,
-  sortOrder: String!,
-  sortBy: String!
+  sortOrder: String,
+  sortBy: String
 }

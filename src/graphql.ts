@@ -1,3 +1,4 @@
+
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -17,8 +18,8 @@ export class CreateDonationInput {
 export class PaginationProps {
     limit: number;
     page: number;
-    sortOrder: string;
-    sortBy: string;
+    sortOrder?: Nullable<string>;
+    sortBy?: Nullable<string>;
 }
 
 export class Donation {
