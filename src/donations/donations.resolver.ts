@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { DonationsService } from './donations.service';
-import { CreateDonationInput } from 'src/graphql';
+import { CreateDonationInput, PaginationProps } from 'src/graphql';
 
 @Resolver('Donation')
 export class DonationsResolver {
@@ -12,8 +12,8 @@ export class DonationsResolver {
   }
 
   @Query('donations')
-  findAll() {
-    return this.donationsService.findAll();
+  findAll(@Args('args') args: PaginationProps) {
+    return this.donationsService.findAll(args);
   }
 
   @Query('donation')

@@ -14,6 +14,13 @@ export class CreateDonationInput {
     mobile?: Nullable<string>;
 }
 
+export class PaginationProps {
+    limit: number;
+    page: number;
+    sortOrder: string;
+    sortBy: string;
+}
+
 export class Donation {
     id: number;
     count: number;
@@ -24,7 +31,7 @@ export class Donation {
 }
 
 export abstract class IQuery {
-    abstract donations(): Donation[] | Promise<Donation[]>;
+    abstract donations(args: PaginationProps): Donation[] | Promise<Donation[]>;
 
     abstract donation(id: number): Nullable<Donation> | Promise<Nullable<Donation>>;
 }

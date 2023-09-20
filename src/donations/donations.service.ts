@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDonationInput } from 'src/graphql';
+import { CreateDonationInput, PaginationProps } from 'src/graphql';
 import { PrismaService } from 'prisma/prisma.service';
 import * as dayjs from 'dayjs';
 
@@ -13,8 +13,16 @@ export class DonationsService {
     });
   }
 
-  async findAll() {
-    const donations = await this.prisma.donation.findMany();
+  async findAll(args: PaginationProps) {
+    const { limit = 10, page = 1, sortOrder = 'desc', sortBy = 'createdAt' } = args;
+
+    const donations = await this.prisma.donation.findMany({
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+      skip: (page - 1) * 10,
+      take: limit,
+    });
 
     return donations.map(el => {
       const obj: any = Object.assign({}, el);

@@ -16,10 +16,17 @@ input CreateDonationInput {
 }
 
 type Query {
-  donations: [Donation!]!
+  donations(args: PaginationProps!): [Donation!]!
   donation(id: Int!): Donation
 }
 
 type Mutation {
   createDonation(createDonationInput: CreateDonationInput!): Donation!
+}
+
+input PaginationProps {
+  limit: Int!,
+  page: Int!,
+  sortOrder: String!,
+  sortBy: String!
 }
