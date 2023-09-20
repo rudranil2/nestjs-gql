@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { DonationsService } from './donations.service';
-import { CreateDonationInput } from './donations.dto';
+import { CreateDonationInput } from 'src/graphql';
 
 @Resolver('Donation')
 export class DonationsResolver {

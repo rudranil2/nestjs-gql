@@ -5,15 +5,23 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { DonationsModule } from './donations/donations.module';
+import { GraphQLError, GraphQLFormattedError } from 'graphql';
 // import { GraphQLDateTime } from 'graphql-iso-date';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
+      typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      typePaths: ['./**/*.graphql'],
+      context: ({ req }: any) => ({ req }),
+      formatError: (error: GraphQLError) => {
+        const graphQlFormattedError: GraphQLFormattedError = {
+          message: error?.message,
+        };
+        return graphQlFormattedError;
+      },
       // resolvers: { DateTime: GraphQLDateTime },
     }),
     DonationsModule,

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDonationInput } from './donations.dto';
+import { CreateDonationInput } from 'src/graphql';
 import { PrismaService } from 'prisma/prisma.service';
 import * as dayjs from 'dayjs';
 
@@ -14,7 +14,13 @@ export class DonationsService {
   }
 
   async findAll() {
-    return this.prisma.donation.findMany();
+    const donations = await this.prisma.donation.findMany();
+
+    return donations.map(el => {
+      const obj: any = Object.assign({}, el);
+      obj.createdAt = dayjs(new Date(obj.createdAt)).format('DD/MM/YYYY');
+      return obj;
+    });
   }
 
   async findOne(id: number) {
