@@ -18,6 +18,7 @@ input CreateDonationInput {
 type Query {
   donations(args: PaginationProps!): [Donation!]!
   donation(id: Int!): Donation
+  totalDonations: Int!
 }
 
 type Mutation {
@@ -29,4 +30,12 @@ input PaginationProps {
   page: Int!,
   sortOrder: String,
   sortBy: String
+}
+
+type Subscription {
+  totalUpdated: Result
+}
+
+type Result {
+  total: Int!
 }

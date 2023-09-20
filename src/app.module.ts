@@ -22,6 +22,10 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
         };
         return graphQlFormattedError;
       },
+      subscriptions: {
+        'graphql-ws': true,
+        // 'subscriptions-transport-ws': true,        //*Recommended to turn this 'true' in case of Apollo-sandbox, But didn't give me error :-/
+      },
       // resolvers: { DateTime: GraphQLDateTime },
     }),
     DonationsModule,
